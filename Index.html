@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram All Country Methods</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #020617, #020617 40%, #000 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(24px);
+      position: relative;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(30, 64, 175, 0.6);
+      padding-bottom: 10px;
+    }
+
+    /* animated title (Telegram All Country Methods) */
+    .animated-title {
+      font-size: 1.1rem; /* h4 size feel */
+      font-weight: 600;
+      display: inline-block;
+      position: relative;
+      animation: slideTitle 3.5s ease-in-out infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes slideTitle {
+      0% {
+        transform: translateX(-8px);
+      }
+      50% {
+        transform: translateX(8px);
+      }
+      100% {
+        transform: translateX(-8px);
+      }
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0.8));
+      border: 1px solid #38bdf8;
+      color: #e0f2fe;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(17, 24, 39, 0.98));
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      pointer-events: none;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tabs {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 3px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .tab-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #9ca3af;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.1s ease, color 0.1s ease;
+    }
+
+    .tab-btn.active {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.4), rgba(37, 99, 235, 0.85));
+      color: #f9fafb;
+    }
+
+    .view-container {
+      margin-top: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .label-sm {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .entry-card {
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.7), rgba(15, 23, 42, 0.98));
+      border-radius: 14px;
+      padding: 10px 10px 8px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.85);
+      font-size: 0.86rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .entry-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .entry-country {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .entry-method {
+      font-size: 0.8rem;
+      color: #d1d5db;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 5px 0;
+    }
+
+    .pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .extra-list {
+      margin-top: 3px;
+      padding-left: 17px;
+    }
+
+    .extra-list li {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .entry-meta {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.95);
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.98);
+      z-index: 2;
+    }
+
+    th, td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.85);
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      color: #9ca3af;
+      font-size: 0.78rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    tbody tr:hover {
+      background: rgba(30, 64, 175, 0.5);
+    }
+
+    .empty-state {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      padding: 8px 4px;
+    }
+
+    .btn-danger {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #b91c1c;
+      background: rgba(153, 27, 27, 0.12);
+      color: #fecaca;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    /* Floating Buttons */
+    .admin-fab {
+      position: fixed;
+      right: 24px;
+      z-index: 50;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.8);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.85), rgba(37, 99, 235, 0.95));
+      color: #f9fafb;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #admin-toggle {
+      bottom: 24px;
+    }
+
+    #mail-toggle {
+      bottom: 80px;
+      background: radial-gradient(circle at top left, rgba(52, 211, 153, 0.9), rgba(16, 185, 129, 0.95));
+      border-color: rgba(52, 211, 153, 0.9);
+    }
+
+    .admin-fab span.icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    /* Modal / Panel Base */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      display: none;
+      justify-content: flex-end;
+      z-index: 40;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .side-panel {
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.98);
+      border-left: 1px solid rgba(55, 65, 81, 0.9);
+      box-shadow: -20px 0 40px rgba(0, 0, 0, 0.8);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      animation: slideIn 0.18s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.95);
+      padding-bottom: 6px;
+    }
+
+    .panel-header h3 {
+      font-size: 1rem;
+    }
+
+    .btn-secondary {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+      overflow-y: auto;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.92);
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #6b7280;
+    }
+
+    input:focus, textarea:focus {
+      outline: 2px solid #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .inline-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .inline-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-primary {
+      margin-top: 5px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #4f46e5);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 18px 30px rgba(56, 189, 248, 0.5);
+    }
+
+    .extra-text-wrapper {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .extra-text-wrapper input {
+      flex: 1;
+    }
+
+    .extra-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .extra-header span {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-bottom: 90px;
+      }
+    }
+
+    /* Mail panel styles */
+    .mail-info {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    .mail-actions-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .mail-list-box {
+      margin-top: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .mail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 4px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      font-family: monospace;
+      font-size: 0.86rem;
+    }
+
+    .mail-row span.index {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-right: 4px;
+    }
+
+    .mail-row-text {
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .btn-xs {
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    .btn-xs:hover {
+      border-color: #38bdf8;
+    }
+
+    .download-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .btn-download {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      border-color: #22c55e;
+    }
+
+    /* Footer + WhatsApp */
+    .footer {
+      margin-top: 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #22c55e;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #ecfdf5;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 12px 25px rgba(22, 163, 74, 0.5);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(22, 163, 74, 0.7);
+    }
+
+    .wa-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      display: inline-block;
+      animation: floatGlow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0);
+        text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+      }
+      50% {
+        transform: translateY(-3px);
+        text-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+      }
+      100% {
+        transform: translateY(0);
+        text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .whatsapp-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h4 class="animated-title">Telegram 🌎 Methods</h4>
+    </div>
+    <div>
+      <span class="badge"><span class="status-dot"></span>Live Public Data</span>
+    </div>
+  </header>
+
+  <!-- PUBLIC VIEW -->
+  <section class="card">
+    <h2>ওয়েবসাইট ভিউ <span class="badge">Public</span></h2>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-target="cards-view">Card View</button>
+      <button class="tab-btn" data-target="table-view">Table View</button>
+    </div>
+
+    <div class="view-container">
+      <!-- Card View -->
+      <div id="cards-view">
+        <div class="label-sm">সব এন্ট্রি (কার্ড আকারে)</div>
+        <div id="cards-container" class="cards-grid"></div>
+        <p id="cards-empty" class="empty-state">এখনও কোনো ডাটা দেয়া হয়নি। Admin বাটন থেকে এডমিন প্যানেল খুলে ডাটা যোগ করুন।</p>
+      </div>
+
+      <!-- Table View -->
+      <div id="table-view" class="hidden">
+        <div class="label-sm">সব এন্ট্রি (টেবিল আকারে)</div>
+        <div id="table-wrapper" class="table-wrapper hidden">
+          <table>
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>দেশ</th>
+              <th>মেথড</th>
+              <th>টাইমজোন</th>
+              <th>রিজিওন</th>
+              <th>ভাষা</th>
+              <th>অতিরিক্ত</th>
+              <th>টাইম</th>
+              <th>একশন</th>
+            </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <p id="table-empty" class="empty-state">এখনও কোনো ডাটা নেই।</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a href="https://wa.me/8801757827996" class="whatsapp-btn" target="_blank" rel="noopener">
+      <span class="wa-icon">📲</span>
+      WhatsApp
+    </a>
+    <div class="footer-text">সুইট বয় নয়ন</div>
+  </footer>
+</div>
+
+<!-- Floating Admin Button -->
+<button class="admin-fab" id="admin-toggle">
+  <span class="icon">⚙</span>
+  Admin
+</button>
+
+<!-- Floating Mail Creat Button -->
+<button class="admin-fab" id="mail-toggle">
+  <span class="icon">@</span>
+  Mail Creat
+</button>
+
+<!-- Admin Modal -->
+<div class="modal-backdrop" id="admin-modal">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div>
+        <h3>এডমিন প্যানেল</h3>
+        <small style="color:#9ca3af;font-size:0.78rem;">এখানে ইনপুট দিলে Public View অটো আপডেট হবে।</small>
+      </div>
+      <button class="btn-secondary" id="admin-close">Close ✕</button>
+    </div>
+
+    <form id="admin-form">
+      <div>
+        <label for="country">দেশ</label>
+        <input id="country" type="text" placeholder="যেমন: বাংলাদেশ, সৌদি আরব" required>
+      </div>
+
+      <div>
+        <label for="method">মেথড</label>
+        <input id="method" type="text" placeholder="যেমন: Saudi mobail 12" required>
+      </div>
+
+      <div class="inline-group">
+        <div>
+          <label for="timezone">টাইমজোন</label>
+          <input id="timezone" type="text" placeholder="যেমন: GMT+3, Asia/Dhaka">
+        </div>
+        <div>
+          <label for="region">রিজিওন</label>
+          <input id="region" type="text" placeholder="যেমন: MENA, Asia, Europe">
+        </div>
+      </div>
+
+      <div>
+        <label for="language">ভাষা</label>
+        <input id="language" type="text" placeholder="যেমন: বাংলা, English, العربية">
+      </div>
+
+      <!-- Extra multiple texts -->
+      <div class="extra-header">
+        <span>অতিরিক্ত টেক্সট (যত খুশি লাইন)</span>
+        <button id="add-text" class="btn-secondary" type="button">+ নতুন লাইন</button>
+      </div>
+
+      <div id="extra-text-container"></div>
+
+      <button class="btn-primary" type="submit">ডাটা সেভ করে লিস্টে যোগ করুন</button>
+    </form>
+  </div>
+</div>
+
+<!-- Mail Creat Modal -->
+<div class="modal-backdrop" id="mail-modal">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div>
+        <h3>Mail Creat প্যানেল</h3>
+        <small style="color:#9ca3af;font-size:0.78rem;">ইমেইল থেকে ছোট-বড় অক্ষর মিক্স করে অনেকগুলো ভ্যারিয়েশন বানান।</small>
+      </div>
+      <button class="btn-secondary" id="mail-close">Close ✕</button>
+    </div>
+
+    <form id="mail-form" onsubmit="return false;">
+      <div>
+        <label for="mail-base">বেস ইমেইল</label>
+        <input id="mail-base" type="text" placeholder="যেমন: mdnayon718@gmail.com">
+        <p class="mail-info">শুধু a-z / A-Z অক্ষরগুলো ছোট-বড় হবে, নাম্বার ও @ ইত্যাদি অপরিবর্তিত থাকবে।</p>
+      </div>
+
+      <div>
+        <label for="mail-count">কতগুলো মেইল বানাবে</label>
+        <input id="mail-count" type="number" min="1" max="200" value="10">
+      </div>
+
+      <button class="btn-primary" id="mail-generate" type="button">Mail Creat</button>
+
+      <div class="mail-actions-top">
+        <button class="btn-xs" id="mail-copy-all" type="button">Copy All</button>
+        <button class="btn-xs" id="mail-clear" type="button">Clear</button>
+      </div>
+
+      <div class="label-sm">Generated Emails</div>
+      <div class="mail-list-box" id="mail-list"></div>
+
+      <div class="download-group">
+        <button class="btn-download" id="mail-download-txt" type="button">TXT</button>
+        <button class="btn-download" id="mail-download-csv" type="button">CSV</button>
+        <button class="btn-download" id="mail-download-xls" type="button">XLS</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const STORAGE_KEY = "siteEntriesV1";
+    const ADMIN_PASSWORD = "NAYON718";
+
+    function checkPassword(message) {
+      const input = prompt(message || "পাসওয়ার্ড দিন:");
+      if (input === null) return false;
+      if (input === ADMIN_PASSWORD) return true;
+      alert("ভুল পাসওয়ার্ড!");
+      return false;
+    }
+
+    // ----- Admin modal elements -----
+    const adminToggle = document.getElementById("admin-toggle");
+    const adminModal = document.getElementById("admin-modal");
+    const adminClose = document.getElementById("admin-close");
+
+    const form = document.getElementById("admin-form");
+    const addTextBtn = document.getElementById("add-text");
+    const extraContainer = document.getElementById("extra-text-container");
+
+    const countryInput = document.getElementById("country");
+    const methodInput = document.getElementById("method");
+    const timezoneInput = document.getElementById("timezone");
+    const regionInput = document.getElementById("region");
+    const languageInput = document.getElementById("language");
+
+    // ----- Public view elements -----
+    const cardsContainer = document.getElementById("cards-container");
+    const cardsEmpty = document.getElementById("cards-empty");
+    const tableWrapper = document.getElementById("table-wrapper");
+    const tableBody = document.getElementById("table-body");
+    const tableEmpty = document.getElementById("table-empty");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const cardsView = document.getElementById("cards-view");
+    const tableView = document.getElementById("table-view");
+
+    // ----- Mail Creat elements -----
+    const mailToggle = document.getElementById("mail-toggle");
+    const mailModal = document.getElementById("mail-modal");
+    const mailClose = document.getElementById("mail-close");
+    const mailBaseInput = document.getElementById("mail-base");
+    const mailCountInput = document.getElementById("mail-count");
+    const mailGenerateBtn = document.getElementById("mail-generate");
+    const mailList = document.getElementById("mail-list");
+    const mailCopyAllBtn = document.getElementById("mail-copy-all");
+    const mailClearBtn = document.getElementById("mail-clear");
+    const mailDownloadTxt = document.getElementById("mail-download-txt");
+    const mailDownloadCsv = document.getElementById("mail-download-csv");
+    const mailDownloadXls = document.getElementById("mail-download-xls");
+
+    let generatedMails = [];
+
+    // ---------- Modal open / close (Admin) ----------
+    adminToggle.addEventListener("click", () => {
+      if (!checkPassword("Admin প্যানেলে ঢুকতে পাসওয়ার্ড দিন:")) return;
+      adminModal.classList.add("show");
+    });
+    adminClose.addEventListener("click", () => {
+      adminModal.classList.remove("show");
+    });
+    adminModal.addEventListener("click", (e) => {
+      if (e.target === adminModal) adminModal.classList.remove("show");
+    });
+
+    // ---------- Modal open / close (Mail) ----------
+    mailToggle.addEventListener("click", () => {
+      mailModal.classList.add("show");
+    });
+    mailClose.addEventListener("click", () => {
+      mailModal.classList.remove("show");
+    });
+    mailModal.addEventListener("click", (e) => {
+      if (e.target === mailModal) mailModal.classList.remove("show");
+    });
+
+    // ---------- LocalStorage ----------
+    function loadEntries() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed;
+      } catch (e) {
+        console.warn("Error loading entries:", e);
+        return [];
+      }
+    }
+
+    function saveEntries(entries) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      } catch (e) {
+        console.warn("Error saving entries:", e);
+      }
+    }
+
+    // ---------- Extra text input ----------
+    function createExtraTextInput(initialValue = "") {
+      const wrapper = document.createElement("div");
+      wrapper.className = "extra-text-wrapper";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "extraText";
+      input.placeholder = "অতিরিক্ত টেক্সট লিখুন...";
+      input.value = initialValue;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "btn-danger";
+      removeBtn.textContent = "ডিলেট";
+
+      removeBtn.addEventListener("click", () => wrapper.remove());
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(removeBtn);
+      extraContainer.appendChild(wrapper);
+    }
+
+    if (!extraContainer.children.length) {
+      createExtraTextInput();
+    }
+
+    addTextBtn.addEventListener("click", () => {
+      createExtraTextInput();
+    });
+
+    // ---------- Tabs ----------
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const target = btn.getAttribute("data-target");
+        if (target === "cards-view") {
+          cardsView.classList.remove("hidden");
+          tableView.classList.add("hidden");
+        } else {
+          cardsView.classList.add("hidden");
+          tableView.classList.remove("hidden");
+        }
+      });
+    });
+
+    // ---------- Render Card View ----------
+    function renderCards(entries) {
+      cardsContainer.innerHTML = "";
+
+      if (!entries.length) {
+        cardsEmpty.style.display = "block";
+        return;
+      }
+      cardsEmpty.style.display = "none";
+
+      entries.forEach((entry, index) => {
+        const card = document.createElement("div");
+        card.className = "entry-card";
+        card.dataset.id = entry.id;
+
+        const header = document.createElement("div");
+        header.className = "entry-card-header";
+
+        const left = document.createElement("div");
+        const countryEl = document.createElement("div");
+        countryEl.className = "entry-country";
+        countryEl.textContent = entry.country || "অজানা দেশ";
+
+        const methodEl = document.createElement("div");
+        methodEl.className = "entry-method";
+        methodEl.textContent = entry.method || "—";
+
+        left.appendChild(countryEl);
+        left.appendChild(methodEl);
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-danger";
+        delBtn.textContent = "ডিলেট";
+        delBtn.addEventListener("click", () => deleteEntry(entry.id));
+
+        header.appendChild(left);
+        header.appendChild(delBtn);
+
+        const pillRow = document.createElement("div");
+        pillRow.className = "pill-row";
+
+        const tzPill = document.createElement("span");
+        tzPill.className = "pill";
+        tzPill.textContent = "টাইমজোন: " + (entry.timezone || "—");
+
+        const regionPill = document.createElement("span");
+        regionPill.className = "pill";
+        regionPill.textContent = "রিজিওন: " + (entry.region || "—");
+
+        const langPill = document.createElement("span");
+        langPill.className = "pill";
+        langPill.textContent = "ভাষা: " + (entry.language || "—");
+
+        pillRow.appendChild(tzPill);
+        pillRow.appendChild(regionPill);
+        pillRow.appendChild(langPill);
+
+        const extraUL = document.createElement("ul");
+        extraUL.className = "extra-list";
+        if (entry.extraTexts && entry.extraTexts.length) {
+          entry.extraTexts.forEach(text => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            extraUL.appendChild(li);
+          });
+        }
+
+        const meta = document.createElement("div");
+        meta.className = "entry-meta";
+        const leftMeta = document.createElement("span");
+        leftMeta.textContent = "এন্ট্রি #" + (index + 1);
+        const rightMeta = document.createElement("span");
+        rightMeta.textContent = entry.createdAt || "";
+
+        meta.appendChild(leftMeta);
+        meta.appendChild(rightMeta);
+
+        card.appendChild(header);
+        card.appendChild(pillRow);
+        if (extraUL.children.length) card.appendChild(extraUL);
+        card.appendChild(meta);
+
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    // ---------- Render Table View ----------
+    function renderTable(entries) {
+      tableBody.innerHTML = "";
+
+      if (!entries.length) {
+        tableWrapper.classList.add("hidden");
+        tableEmpty.style.display = "block";
+        return;
+      }
+
+      tableWrapper.classList.remove("hidden");
+      tableEmpty.style.display = "none";
+
+      entries.forEach((entry, index) => {
+        const tr = document.createElement("tr");
+
+        const tdIndex = document.createElement("td");
+        tdIndex.textContent = index + 1;
+
+        const tdCountry = document.createElement("td");
+        tdCountry.textContent = entry.country || "—";
+
+        const tdMethod = document.createElement("td");
+        tdMethod.textContent = entry.method || "—";
+
+        const tdTZ = document.createElement("td");
+        tdTZ.textContent = entry.timezone || "—";
+
+        const tdRegion = document.createElement("td");
+        tdRegion.textContent = entry.region || "—";
+
+        const tdLang = document.createElement("td");
+        tdLang.textContent = entry.language || "—";
+
+        const tdExtra = document.createElement("td");
+        tdExtra.textContent = entry.extraTexts && entry.extraTexts.length
+          ? entry.extraTexts.join(" | ")
+          : "—";
+
+        const tdTime = document.createElement("td");
+        tdTime.textContent = entry.createdAt || "";
+
+        const tdAction = document.createElement("td");
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-danger";
+        delBtn.textContent = "ডিলেট";
+        delBtn.addEventListener("click", () => deleteEntry(entry.id));
+        tdAction.appendChild(delBtn);
+
+        tr.appendChild(tdIndex);
+        tr.appendChild(tdCountry);
+        tr.appendChild(tdMethod);
+        tr.appendChild(tdTZ);
+        tr.appendChild(tdRegion);
+        tr.appendChild(tdLang);
+        tr.appendChild(tdExtra);
+        tr.appendChild(tdTime);
+        tr.appendChild(tdAction);
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // ---------- Delete entry (with password) ----------
+    function deleteEntry(id) {
+      if (!checkPassword("এন্ট্রি ডিলেট করতে পাসওয়ার্ড দিন:")) return;
+      const entries = loadEntries();
+      const filtered = entries.filter(e => e.id !== id);
+      saveEntries(filtered);
+      renderAll();
+    }
+
+    function renderAll() {
+      const entries = loadEntries();
+      renderCards(entries);
+      renderTable(entries);
+    }
+
+    // ---------- Admin form submit ----------
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const extraInputs = extraContainer.querySelectorAll('input[name="extraText"]');
+      const extraTexts = [];
+      extraInputs.forEach(inp => {
+        const v = inp.value.trim();
+        if (v !== "") extraTexts.push(v);
+      });
+
+      const country = countryInput.value.trim();
+      const method = methodInput.value.trim();
+      const timezone = timezoneInput.value.trim();
+      const region = regionInput.value.trim();
+      const language = languageInput.value.trim();
+
+      if (!country || !method) {
+        alert("দেশ এবং মেথড ফিল্ড অবশ্যই পূরণ করতে হবে!");
+        return;
+      }
+
+      const now = new Date();
+      const createdAt = now.toLocaleString("bn-BD", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      const newEntry = {
+        id: "entry-" + Date.now() + "-" + Math.random().toString(16).slice(2),
+        country,
+        method,
+        timezone,
+        region,
+        language,
+        extraTexts,
+        createdAt
+      };
+
+      const entries = loadEntries();
+      entries.unshift(newEntry);
+      saveEntries(entries);
+      renderAll();
+
+      form.reset();
+      extraContainer.innerHTML = "";
+      createExtraTextInput();
+
+      alert("ডাটা সফলভাবে লিস্টে যোগ হয়েছে!");
+    });
+
+    // ---------- Mail Creat logic ----------
+    function randomCaseEmail(str) {
+      let result = "";
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (/[a-zA-Z]/.test(ch)) {
+          const upper = Math.random() < 0.5;
+          result += upper ? ch.toUpperCase() : ch.toLowerCase();
+        } else {
+          result += ch;
+        }
+      }
+      return result;
+    }
+
+    function renderMailList() {
+      mailList.innerHTML = "";
+      if (!generatedMails.length) {
+        const p = document.createElement("p");
+        p.className = "empty-state";
+        p.textContent = "এখনও কোনো মেইল জেনারেট করা হয়নি।";
+        mailList.appendChild(p);
+        return;
+      }
+
+      generatedMails.forEach((mail, idx) => {
+        const row = document.createElement("div");
+        row.className = "mail-row";
+
+        const textSpan = document.createElement("div");
+        textSpan.className = "mail-row-text";
+        textSpan.innerHTML = '<span class="index">#' + (idx + 1) + '</span>' + mail;
+
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "btn-xs";
+        copyBtn.textContent = "Copy";
+        copyBtn.addEventListener("click", () => copyToClipboard(mail));
+
+        row.appendChild(textSpan);
+        row.appendChild(copyBtn);
+        mailList.appendChild(row);
+      });
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+      } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    mailGenerateBtn.addEventListener("click", () => {
+      const base = (mailBaseInput.value || "").trim();
+      if (!base) {
+        alert("প্রথমে বেস ইমেইল লিখুন!");
+        return;
+      }
+      let count = parseInt(mailCountInput.value, 10);
+      if (isNaN(count) || count < 1) count = 1;
+      if (count > 200) count = 200;
+      mailCountInput.value = count;
+
+      const results = [];
+      for (let i = 0; i < count; i++) {
+        results.push(randomCaseEmail(base));
+      }
+      generatedMails = results;
+      renderMailList();
+    });
+
+    mailCopyAllBtn.addEventListener("click", () => {
+      if (!generatedMails.length) {
+        alert("কোনো মেইল জেনারেট করা নেই!");
+        return;
+      }
+      copyToClipboard(generatedMails.join("\n"));
+      alert("সব মেইল ক্লিপবোর্ডে কপি হয়েছে!");
+    });
+
+    mailClearBtn.addEventListener("click", () => {
+      generatedMails = [];
+      renderMailList();
+    });
+
+    function downloadFile(filename, content, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    mailDownloadTxt.addEventListener("click", () => {
+      if (!generatedMails.length) {
+        alert("কোনো মেইল জেনারেট করা নেই!");
+        return;
+      }
+      downloadFile("mails.txt", generatedMails.join("\n"), "text/plain;charset=utf-8");
+    });
+
+    mailDownloadCsv.addEventListener("click", () => {
+      if (!generatedMails.length) {
+        alert("কোনো মেইল জেনারেট করা নেই!");
+        return;
+      }
+      const lines = ["email"];
+      generatedMails.forEach(m => {
+        const safe = '"' + m.replace(/"/g, '""') + '"';
+        lines.push(safe);
+      });
+      const csv = lines.join("\n");
+      downloadFile("mails.csv", csv, "text/csv;charset=utf-8");
+    });
+
+    mailDownloadXls.addEventListener("click", () => {
+      if (!generatedMails.length) {
+        alert("কোনো মেইল জেনারেট করা নেই!");
+        return;
+      }
+      const rows = generatedMails.map(m => "<tr><td>" + m + "</td></tr>").join("");
+      const html =
+        "<html><head><meta charset='UTF-8'></head><body><table><thead><tr><th>Email</th></tr></thead><tbody>" +
+        rows +
+        "</tbody></table></body></html>";
+      downloadFile("mails.xls", html, "application/vnd.ms-excel");
+    });
+
+    // Init
+    renderAll();
+    renderMailList();
+  });
+</script>
+</body>
+</html>
